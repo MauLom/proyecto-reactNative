@@ -1,8 +1,20 @@
 import React, { Fragment, useState } from "react";
 
-const InputTodo = () => {
-    const [description , setDescription] = useState("");
+function getUserData() {
 
+    fetch("http://localhost:5000/getAllUsers", {
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(res =>{console.log("res",res)})
+        .catch(error => { console.error(error) })
+}
+
+const InputTodo = () => {
+    const [description, setDescription] = useState("");
+    getUserData()
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
@@ -19,20 +31,20 @@ const InputTodo = () => {
         }
     };
 
-    return  (
-    <Fragment>
-        <h1 className="text-center mt-5">Pern Todo List</h1>
-        <form className="d-flex mt-5" onSubmit={onSubmitForm}>
-            <input 
-            type="text" 
-            className="form-control" 
-            value={description} 
-            onChange={e => setDescription(e.target.value)} 
-            />
-            <button className="btn btn-success">Add</button>
-        </form>
+    return (
+        <Fragment>
+            <h1 className="text-center mt-5">Pern Todo List</h1>
+            <form className="d-flex mt-5" onSubmit={onSubmitForm}>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                />
+                <button className="btn btn-success">Add</button>
+            </form>
         </Fragment>
-        );
-       };
+    );
+};
 
 export default InputTodo;

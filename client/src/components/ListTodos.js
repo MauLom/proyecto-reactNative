@@ -42,6 +42,7 @@ const ListTodos = () => {
          <Fragment><table class="table mt-5 text-center">
     <thead>
       <tr>
+          <th>indice</th>
         <th>Description</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -53,8 +54,9 @@ const ListTodos = () => {
         <td>Doe</td>
         <td>john@example.com</td>
       </tr> */}
-        {todos.map(todo => (
+        {todos.map((todo, index) => (
             <tr key={todo.todo_id}>
+                <td>{index}</td>
                 <td>{todo.description}</td>
                 <td><EditTodo todo ={todo} />
                 </td>
