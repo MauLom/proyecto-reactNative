@@ -1,49 +1,30 @@
 import React, { Fragment, useState } from "react";
-
-function getUserData() {
-
-    fetch("http://localhost:5000/getAllUsers", {
-        headers: { "Content-Type": "application/json" },
-    })
-        .then(response => {
-            return response.json()
-        })
-        .then(res =>{console.log("res",res)})
-        .catch(error => { console.error(error) })
-}
-
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 const InputTodo = () => {
-    const [description, setDescription] = useState("");
-    getUserData()
-    const onSubmitForm = async e => {
-        e.preventDefault();
-        try {
-            const body = { description };
-            const response = await fetch("http://localhost:5000/todos", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-
-            window.location = "/";
-        } catch (err) {
-            console.error(err.message);
-        }
-    };
-
+    const [userArr, setUserArr] = useState([])
+    const [optionsArr, setOptionsArr] = useState([])     
+        fetch("http://localhost:5000/getAllUsers", {
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(res => {
+                setUserArr(res)
+                let auxArr = []
+                userArr.map(eachUser => {
+                    let auxObj = { label: `${eachUser.user_first_name} ${eachUser.user_last_name}`, value: eachUser.user_id }
+                    auxArr.push(auxObj)
+                })
+                setOptionsArr(auxArr)
+            })
+            .catch(error => { console.error(error) }) 
+    const defaultOption = optionsArr[0];
     return (
-        <Fragment>
-            <h1 className="text-center mt-5">Pern Todo List</h1>
-            <form className="d-flex mt-5" onSubmit={onSubmitForm}>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                />
-                <button className="btn btn-success">Add</button>
-            </form>
-        </Fragment>
+        <>
+            <Dropdown options={optionsArr} value={defaultOption} placeholder="Select an option" />
+        </>
     );
 };
 
