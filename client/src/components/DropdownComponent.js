@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {Fragment, useEffect, useState } from "react";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 const DropdownComponent = () => {
     const [optionsArr, setOptionsArr] = useState([])
+    const [userLikes, setUserLikes] = useState([]);
+    let userId = undefined;
     let valueDropdown = undefined
     const getUserList = async () => {
         try {
@@ -19,9 +21,22 @@ const DropdownComponent = () => {
             console.error(err.message)
         }
     }
+    const getLikes = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/getUserLikes/" + userId)
+            const jsonData = await response.json()
+
+            setUserLikes(jsonData);
+        } catch (err) {
+            console.error(err.message)
+        }
+    };
     const handleChange = (slctdOption) => {
         valueDropdown = slctdOption
         sessionStorage.setItem("userId", slctdOption)
+        getLikes();
+        userId = slctdOption;
+        console.log("userid:", userId )
     }
     useEffect(() => {
         getUserList()
@@ -32,6 +47,24 @@ const DropdownComponent = () => {
                 value={valueDropdown}
                 placeholder="Select an option"
                 onChange={handleChange} />
+            <Fragment>
+                <table class="table mt-5 text-center">
+                    <thead>
+                        <tr>
+                            <th>Likes of user</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {userLikes.map((eachLike, index) => (
+                            <tr key={eachLike.todo_id}>
+                                <td>{eachLike}</td>
+                                <td>{eachLike.description}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </Fragment>
         </>
     );
 };

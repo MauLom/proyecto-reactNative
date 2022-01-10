@@ -11,7 +11,7 @@ function App() {
     <Fragment>
       <div className="container">
         <DropdownComponent />
-        <LikesList />
+        {/* <LikesList /> */}
       </div>
     </Fragment>
   );
