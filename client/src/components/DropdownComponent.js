@@ -23,10 +23,15 @@ const DropdownComponent = () => {
     }
     const getLikes = async () => {
         try {
-            const response = await fetch("http://localhost:5000/getUserLikes/" + userId)
+            const response = await fetch("http://localhost:5000/getUsersLikes/" + userId)
             const jsonData = await response.json()
-
-            setUserLikes(jsonData);
+            console.log("jsonData", jsonData)
+            let auxArr = []
+            jsonData.forEach(eachLike => {
+                auxArr.push(eachLike.fan_of_music_group)
+            })
+            setUserLikes(auxArr);
+            // setUserLikes(jsonData);
         } catch (err) {
             console.error(err.message)
         }
@@ -56,9 +61,8 @@ const DropdownComponent = () => {
                     <tbody>
 
                         {userLikes.map((eachLike, index) => (
-                            <tr key={eachLike.todo_id}>
+                            <tr key={"key-" + index}>
                                 <td>{eachLike}</td>
-                                <td>{eachLike.description}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -10,8 +10,13 @@ const LikesList = () => {
         try {
             const response = await fetch("http://localhost:5000/getUserLikes/" + userId)
             const jsonData = await response.json()
+            let auxArr =[]
+            // jsonData.forEach(eachLike => {
+            //     auxArr.push(eachLike.fan_of_music_group)
+            // })
+            console.log("mensaje", jsonData[0])
 
-            setUserLikes(jsonData);
+            setUserLikes(auxArr);
         } catch (err) {
             console.error(err.message)
         }
@@ -21,7 +26,7 @@ const LikesList = () => {
         getLikes();
     }, []);
 
-    console.log(userLikes);
+    console.log("HOLA", userLikes);
 
     return (
         <Fragment>
@@ -34,9 +39,8 @@ const LikesList = () => {
                 <tbody>
 
                     {userLikes.map((eachLike, index) => (
-                        <tr key={eachLike.todo_id}>
+                        <tr key={"key-"+index}>
                             <td>{eachLike}</td>
-                            <td>{eachLike.description}</td>
                         </tr>
                     ))}
                 </tbody>
