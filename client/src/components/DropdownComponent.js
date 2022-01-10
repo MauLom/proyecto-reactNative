@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 const DropdownComponent = () => {
@@ -32,11 +32,10 @@ const DropdownComponent = () => {
         }
     };
     const handleChange = (slctdOption) => {
-        valueDropdown = slctdOption
-        sessionStorage.setItem("userId", slctdOption)
+        valueDropdown = slctdOption.value
+        userId = slctdOption.value;
         getLikes();
-        userId = slctdOption;
-        console.log("userid:", userId )
+        console.log("userid:", userId)
     }
     useEffect(() => {
         getUserList()
