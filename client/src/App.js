@@ -1,20 +1,20 @@
-import React,{Fragment, Framgnet} from "react";
+import React, { Fragment } from "react";
 import './App.css';
 
 //components
 
-import InputTodo from "./components/InputTodo";
-import ListTodos from "./components/ListTodos";
+import DropdownComponent from "./components/DropdownComponent";
+import LikesList from "./components/LikesList";
 
 function App() {
   return (
-  <Fragment>
-    <div className="container"> 
-       <InputTodo />
-       <ListTodos />
-    </div>
+    <Fragment>
+      <div className="container">
+        <DropdownComponent />
+        <LikesList />
+      </div>
     </Fragment>
-    );
+  );
 }
 
 export default App;
